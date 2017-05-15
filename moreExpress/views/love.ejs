@@ -1,0 +1,14 @@
+<% include partials/header %> 
+
+<h1>You fell in love with: <%= thingVar.toUpperCase() %> </h1>
+    <% if(thingVar.toLowerCase() === "sheema"){ %>
+        <p>Good choice! Sheema is the best!</p>
+    <%    }  else { %>
+    <p> Not sure that's a good choice. </p>
+    <% } %>
+<p>This is the ejs template btw</p>
+
+<%= 5 + 5 %>
+<% 5 + 5 %>
+
+<% include partials/footer %> 
