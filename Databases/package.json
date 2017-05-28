@@ -1,0 +1,14 @@
+{
+  "name": "cat_app",
+  "version": "1.0.0",
+  "description": "cat app",
+  "main": "cats.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ward Minnis",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^4.10.3"
+  }
+}
