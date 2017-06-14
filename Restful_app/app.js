@@ -61,15 +61,34 @@ app.post("/blogs", function(req, res){
     });
 });
 
-// SHOW 
+// SHOW ROUTE
 app.get("/blogs/:id", function(req, res){
-    res.render("show");
-})
+    Blog.findById(req.params.id, function(err, foundBlog){
+        if(err){
+            console.log(err);
+            res.redirect("/blogs");
+        } else {
+            res.render("show", {blog: foundBlog});
+        }
+    });
+});
 
+
+// EDIT ROUTE
+app.get("/blogs/:id/edit", function(req, res){
+    Blog.findById(req.params.id, function(err, foundBlog){
+        if(err){
+            console.log(err);
+            res.redirect("/blogs");
+        } else {
+            res.render("edit", {blog: foundBlog});
+        }
+    });
+});
 
 // CATCH ALL route
 app.get("/*", function(req, res){
-    res.send("you found the bottom of the stack")
+    res.send("you found the bottom of the stack!");
 });
 
 app.listen(process.env.PORT, process.env.IP, function(){
