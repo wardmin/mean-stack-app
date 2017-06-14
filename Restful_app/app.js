@@ -1,13 +1,15 @@
-var express     = require("express"),
-    app         = express(),
-    bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose");
+var express         = require("express"),
+    app             = express(),
+    bodyParser      = require("body-parser"),
+    mongoose        = require("mongoose"), 
+    methodOverride  = require("method-override");
 
 // APP CONFIG
 mongoose.connect("mongodb://localhost/restful_app");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static('public'));
+app.use(methodOverride("_method"));
 
 
 // MONGOOSE/MODEL CONFIG
@@ -82,6 +84,17 @@ app.get("/blogs/:id/edit", function(req, res){
             res.redirect("/blogs");
         } else {
             res.render("edit", {blog: foundBlog});
+        }
+    });
+});
+
+// UPDATE ROUTE
+app.put("/blogs/:id", function(req, res){
+    Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
+        if(err){
+            res.redirect("/blogs");
+        } else {
+            res.redirect("/blogs/" + req.params.id);
         }
     });
 });
