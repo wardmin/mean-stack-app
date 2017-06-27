@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + 'public'));
 
+
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret: "Ward will master this shit!",
@@ -31,6 +32,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+});
+
 
 // HOME ROUTE
 app.get("/", function(req, res){
@@ -40,6 +46,8 @@ app.get("/", function(req, res){
 
 // INDEX - Route show all campgrounds
 app.get("/campgrounds", function(req, res){
+    console.log(req.user);
+    console.log(res.locals.currentUser);
 //   res.render("campgrounds", {campgrounds:campgrounds}); 
     Campground.find({}, function(err, campgrounds){
         if(err){
