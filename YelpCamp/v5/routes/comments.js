@@ -49,7 +49,18 @@ router.post("/", isLoggedIn, function(req, res){
 
 // EDIT ROUTE
 router.get("/:comment_id/edit", function (req, res) {
-    res.send("Edit route for comments");
+    Campground.findById(req.params.id, function(err, campground){
+        if(err){
+            console.log(err);
+        } else {
+            Comment.findById(req.params.comment_id, function(err, comment){
+                if(err){
+                    console.log(err);
+                }
+            res.render("comments/edit", {campground:campground, comment:comment});
+            });
+        }
+    });
 });
 
 // middleware
