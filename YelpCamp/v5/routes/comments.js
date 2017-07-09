@@ -49,18 +49,25 @@ router.post("/", isLoggedIn, function(req, res){
 
 // EDIT ROUTE
 router.get("/:comment_id/edit", function (req, res) {
-    Campground.findById(req.params.id, function(err, campground){
+    Comment.findById(req.params.comment_id, function(err, comment){
         if(err){
             console.log(err);
         } else {
-            Comment.findById(req.params.comment_id, function(err, comment){
-                if(err){
-                    console.log(err);
-                }
-            res.render("comments/edit", {campground:campground, comment:comment});
-            });
+            res.render("comments/edit", {campground_id:req.params.id, comment:comment});
         }
     });
+});
+
+// UPDATE ROUTE 
+router.put("/:comment_id", function (req, res){
+   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
+       if(err){
+           console.log(err);
+           res.redirect("/campgrounds/" + req.params.id);
+       } else {
+            res.redirect("/campgrounds/" + req.params.id);
+       }
+   }) 
 });
 
 // middleware
